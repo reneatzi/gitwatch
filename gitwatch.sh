@@ -331,7 +331,10 @@ eval $INCOMMAND | while read -r line; do
         STATUS=$($GIT status -s)
         if [ -n "$STATUS" ]; then # only commit if status shows tracked changes.
             $GIT add $GIT_ADD_ARGS # add file(s) to index
-            $GIT commit $GIT_COMMIT_ARGS -m"$FORMATTED_COMMITMSG" # construct commit message and commit
+
+            # RA: Updated with custom commit message
+            # Parameters -l and -m are not used anymore
+            $GIT commit $GIT_COMMIT_ARGS -m"$(git status --porcelain)"
 
             if [ -n "$PUSH_CMD" ]; then
                 echo "Push command is $PUSH_CMD";
